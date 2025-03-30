@@ -1,7 +1,10 @@
 const numberButtons = document.querySelectorAll('.number-button');
 let selectedNumbers = []; // Cambiar a un array para almacenar múltiples números
 let adminMode = false;
-let soldNumbers = JSON.parse(localStorage.getItem('soldNumbers')) || [];
+let soldNumbers = [];
+
+// Conectar al servidor WebSocket
+const socket = new WebSocket('ws://localhost:5000'); // Cambia esto a tu URL de producción
 
 // Marcar los números vendidos al cargar la página
 function updateNumberStates() {
@@ -15,7 +18,18 @@ function updateNumberStates() {
         }
     });
 }
-updateNumberStates();
+
+// Cargar números vendidos desde el servidor al inicio
+async function loadSoldNumbers() {
+    try {
+        const response = await fetch('/sold-numbers'); // Nueva ruta optimizada
+        soldNumbers = await response.json();
+        updateNumberStates(); // Actualizar UI
+    } catch (error) {
+        console.error('Error al cargar números vendidos:', error);
+    }
+}
+loadSoldNumbers(); // Cargar números vendidos al inicio
 
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -26,10 +40,11 @@ numberButtons.forEach(button => {
                 button.classList.remove('sold');
                 button.disabled = false;
                 soldNumbers.splice(index, 1); // Eliminar el número de la lista de vendidos
-                localStorage.setItem('soldNumbers', JSON.stringify(soldNumbers)); // Actualizar localStorage
                 updateNumberStates(); // Actualizar la UI
                 alert(`Número ${button.value} habilitado.`);
                 displaySoldNumbers(); // Actualizar la lista de números vendidos
+                // Enviar actualización a través de WebSocket
+                socket.send(JSON.stringify({ number: button.value, selected: false }));
             } else {
                 alert(`El número ${button.value} no está vendido.`);
             }
@@ -55,8 +70,9 @@ document.getElementById('payButton').addEventListener('click', () => {
         if (confirm(`¿Estás seguro de comprar los números: ${selectedNumbers.join(', ')}?`)) {
             selectedNumbers.forEach(number => {
                 soldNumbers.push(number); // Agregar cada número a la lista de vendidos
+                // Enviar actualización a través de WebSocket
+                socket.send(JSON.stringify({ number, selected: true }));
             });
-            localStorage.setItem('soldNumbers', JSON.stringify(soldNumbers)); // Guardar en localStorage
             updateNumberStates(); // Actualizar la UI
             sendWhatsAppMessage(message); // Enviar mensaje por WhatsApp
             selectedNumbers = []; // Limpiar la selección
@@ -88,9 +104,11 @@ function displaySoldNumbers() {
             removeButton.textContent = 'Eliminar';
             removeButton.onclick = () => {
                 soldNumbers.splice(soldNumbers.indexOf(number), 1); // Eliminar el número de la lista
-                localStorage.setItem('soldNumbers', JSON.stringify(soldNumbers)); // Actualizar localStorage
+                loadSoldNumbers.setItem('soldNumbers', JSON.stringify(soldNumbers)); // Actualizar loadSoldNumbers
                 updateNumberStates(); // Actualizar la UI
                 displaySoldNumbers(); // Actualizar la lista de números vendidos
+                // Enviar actualización a través de WebSocket
+                socket.send(JSON.stringify({ number, selected: false }));
             };
             li.appendChild(removeButton);
             soldNumbersUl.appendChild(li);
@@ -100,7 +118,8 @@ function displaySoldNumbers() {
     }
 }
 
+// Función para enviar un mensaje por WhatsApp
 function sendWhatsAppMessage(message) {
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=573024990764&text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank'); // Abrir en una nueva pestaña
 }
