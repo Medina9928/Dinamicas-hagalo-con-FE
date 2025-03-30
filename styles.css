@@ -1,0 +1,171 @@
+/* styles.css */
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1111112d;
+}
+
+header {
+    background: #041575e5;
+    color: rgb(255, 255, 255);
+    padding: 20px;
+    text-align: center;
+}
+
+.header-info {
+    text-align: center; /* Centra el texto horizontalmente */
+    margin-bottom: 20px; /* Espacio debajo de la sección */
+    background: rgb(255, 255, 255); /* Fondo blanco para la sección */
+    padding: 15px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgb(119, 117, 117); /* Sombra para dar profundidad */
+}
+
+.header-info h2 {
+    margin: 0; /* Elimina el margen por defecto */
+    font-size: 5em; /* Tamaño de fuente para el encabezado */
+    color: #1302fd; /* Cambia el color del texto */
+}
+
+.header-info p {
+    margin: 5px 0; /* Espaciado vertical entre párrafos */
+    font-size: 1.5em; /* Tamaño de fuente para los párrafos */
+}
+
+header img {
+    width: 650px;  /* Ancho del logo */
+    height: 150px; /* Alto del logo */
+    object-fit: contain; /* Mantiene la proporción de la imagen */
+    max-width: 100%; /* Asegura que el logo no exceda el ancho del contenedor */
+    height: auto; /* Mantiene la proporción */
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    padding: 20px;
+}
+
+.select-quantity {
+    text-align: center; /* Centra el texto horizontalmente */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+    font-size: 1.8em; /* Tamaño de fuente para el encabezado */
+    color: #000000; /* Color del texto */
+}
+
+section {
+    margin-bottom: 20px; /* Aumentar el margen inferior para más separación */
+    background: rgb(255, 255, 255);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgb(255, 255, 255);
+}
+
+/* Estilos para la tabla */
+.number-table {
+    margin: 20px auto; /* Centra la tabla horizontalmente */
+    width: 100%; /* Ajusta el ancho de la tabla */
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%; /* Ajusta el ancho de la tabla */
+}
+
+td {
+    padding: 15px; /* Ajusta el espaciado interno de las celdas */
+    border: 1px solid #ddd; /* Ajusta el borde de las celdas */
+}
+
+.number-button {
+    padding: 20px; /* Ajusta el espaciado interno de los botones */
+    font-size: 1.5em; /* Ajusta el tamaño de la fuente de los botones */
+    cursor: pointer;
+    border: 2px solid #002fff;
+    border-radius: 5px;
+    background-color: #ffffff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.number-button.selected {
+    background-color: #0026ff;
+    color: white;
+}
+
+.button-container {
+    text-align: center; /* Centra el contenido dentro del contenedor */
+    margin-top: 20px; /* Espacio superior para separar del contenido anterior */
+}
+
+.pay-button {
+    display: inline-block; /* Permite aplicar padding y centrar */
+    background: #0206ff; /* Color de fondo */
+    color: rgb(255, 255, 255); /* Color del texto */
+    padding: 15px 30px; /* Aumentar el padding para hacer el botón más grande */
+    font-size: 1.5em; /* Aumentar el tamaño de la fuente */
+    text-decoration: none; /* Sin subrayado */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background 0.3s; /* Transición suave para el color de fondo */
+}
+
+.pay-button:hover {
+    background: #045cb4; /* Color de fondo al pasar el mouse */
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #333;
+    color: white;
+}
+
+.whatsapp-link {
+    color: #25D366; /* Color de WhatsApp */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.whatsapp-link:hover {
+    text-decoration: underline;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 600px) {
+    header img {
+        width: 100%; /* El logo ocupará el 100% del ancho del contenedor */
+        height: auto; /* Mantiene la proporción */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Tamaño de fuente más pequeño en móviles */
+    }
+
+    .header-info h2 {
+        font-size: 2.5em; /* Tamaño de fuente más pequeño en móviles */
+    }
+
+    .header-info p {
+        font-size: 1.2em; /* Tamaño de fuente más pequeño en móviles */
+    }
+
+    section {
+        padding: 10px; /* Menos padding en pantallas pequeñas */
+    }
+
+    .number-button {
+        flex: 1 0 20%; /* 5 botones por fila en pantallas pequeñas */
+        font-size: 1.2em; /* Tamaño de fuente más pequeño en móviles */
+        padding: 10px; /* Menos padding en botones */
+    }
+
+    .pay-button {
+        width: 100%; /* Botón ocupa el 100% del ancho en móviles */
+        padding: 15px; /* Aumenta el padding para mejor usabilidad */
+    }
+}
